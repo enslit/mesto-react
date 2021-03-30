@@ -1,9 +1,7 @@
-import React from 'react';
-
-function Footer(props) {
+function Footer() {
   return (
-    <footer className="footer container">
-      <p className="footer__copyright">&copy; 2020 Mesto Russia</p>
+    <footer className='footer container'>
+      <p className='footer__copyright'>&copy; 2020 Mesto Russia</p>
     </footer>
   );
 }

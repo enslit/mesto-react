@@ -5,54 +5,54 @@ class Api {
   }
 
   _fetch(url, method = 'GET', body = null) {
-    const fetchUrl = `${this._baseUrl}/${url}`
+    const fetchUrl = `${this._baseUrl}/${url}`;
     const options = {
       method,
-      headers: this._headers
-    }
+      headers: this._headers,
+    };
 
     if (body) {
-      options.body = JSON.stringify(body)
+      options.body = JSON.stringify(body);
     }
 
     return fetch(fetchUrl, options)
       .then((res) => {
-        if ( ! res.ok) {
+        if (!res.ok) {
           return Promise.reject({
             statusCode: res.status,
-            message: res.statusText
-          })
+            message: res.statusText,
+          });
         }
         return res.json();
-      })
+      });
   }
 
   getMe() {
-    return this._fetch('users/me')
+    return this._fetch('users/me');
   }
 
   getInitialCards() {
-    return this._fetch('cards')
+    return this._fetch('cards');
   }
 
   updateProfile(data) {
-    return this._fetch('users/me', 'PATCH', data)
+    return this._fetch('users/me', 'PATCH', data);
   }
 
   postCard(card) {
-    return this._fetch('cards', 'POST', card)
+    return this._fetch('cards', 'POST', card);
   }
 
   delete(id) {
-    return this._fetch(`cards/${id}`, 'DELETE')
+    return this._fetch(`cards/${id}`, 'DELETE');
   }
 
   like(id, like = true) {
-    return this._fetch(`cards/likes/${id}`, like ? 'PUT' : 'DELETE')
+    return this._fetch(`cards/likes/${id}`, like ? 'PUT' : 'DELETE');
   }
 
   updateAvatar(data) {
-    return this._fetch(`users/me/avatar`, 'PATCH', data)
+    return this._fetch(`users/me/avatar`, 'PATCH', data);
   }
 }
 
@@ -61,5 +61,5 @@ export const api = new Api({
   headers: {
     authorization: '52186c90-0ae5-45bb-99b5-e4acaa2b939f',
     'Content-Type': 'application/json',
-  }
-})
+  },
+});
