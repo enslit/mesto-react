@@ -9,6 +9,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
+  const [selectedCard, setSelectedCard] = useState(null)
 
   const handleEditAvatarClick = (evt) => {
     setIsEditAvatarPopupOpen(true)
@@ -22,10 +23,15 @@ function App() {
     setIsAddPlacePopupOpen(true)
   }
 
+  const handleCardClick = (card) => {
+    setSelectedCard(card)
+  }
+
   const closeAllPopups = (evt) => {
     setIsEditAvatarPopupOpen(false)
     setIsEditProfilePopupOpen(false)
     setIsAddPlacePopupOpen(false)
+    setSelectedCard(null)
   }
 
   return (
@@ -34,6 +40,7 @@ function App() {
       <Main onEditProfile={handleEditProfileClick}
             onAddPlace={handleAddPlaceClick}
             onEditAvatar={handleEditAvatarClick}
+            onCardClick={handleCardClick}
       />
       <Footer />
 
@@ -87,7 +94,7 @@ function App() {
         </label>
       </PopupWithForm>
 
-      <ImagePopup />
+      <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
 
       <PopupWithForm title="Вы уверены?" name="delete">
         <input type="hidden" className="form__input form__input_type_id" name="id" />
@@ -104,22 +111,6 @@ function App() {
           <span className="form__input-error avatar-input-error" />
         </label>
       </PopupWithForm>
-
-      <template id="cardTemplate">
-        <li className="cards__list-item">
-          <article className="card">
-            <button type="button" aria-label="Удалить" className="card__delete card__delete_hidden btn btn_type_delete" />
-            <img src="../images/photo-1.jpg" alt="Карачаевск" className="card__image" />
-              <div className="card__description">
-                <h2 className="card__title">Карачаевск</h2>
-                <div className="card__like">
-                  <button type="button" aria-label="Нравится" className="btn btn_type_like" />
-                  <span className="card__like-cnt" />
-                </div>
-              </div>
-          </article>
-        </li>
-      </template>
     </div>
   );
 }
