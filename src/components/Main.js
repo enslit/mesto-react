@@ -1,23 +1,11 @@
 import React from 'react';
 import spinner from '../images/spinner.svg'
 
-function Main(props) {
-  const handleEditAvatarClick = (evt) => {
-    document.querySelector('.popup_type_update-profile').classList.add('popup_opened')
-  }
-
-  const handleEditProfileClick = (evt) => {
-    document.querySelector('.popup_type_edit-profile').classList.add('popup_opened')
-  }
-
-  const handleAddPlaceClick = (evt) => {
-    document.querySelector('.popup_type_add-card').classList.add('popup_opened')
-  }
-
+function Main({onAddPlace, onEditAvatar, onEditProfile}) {
   return (
     <main className="content container">
       <section className="profile">
-        <div className="profile__avatar-wrapper" onClick={handleEditAvatarClick}>
+        <div className="profile__avatar-wrapper" onClick={onEditAvatar}>
           <img src={spinner} alt="Аватар" className="profile__avatar" />
         </div>
         <div className="profile__details">
@@ -26,7 +14,7 @@ function Main(props) {
             <button type="button"
               aria-label="Редактировать профиль"
               className="btn btn_type_edit-profile"
-              onClick={handleEditProfileClick}
+              onClick={onEditProfile}
             />
           </div>
           <p className="profile__about" />
@@ -34,7 +22,7 @@ function Main(props) {
         <button type="button"
                 aria-label="Добавить новую карточку"
                 className="btn btn_type_add-card"
-                onClick={handleAddPlaceClick}
+                onClick={onAddPlace}
         />
       </section>
 
