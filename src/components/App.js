@@ -37,59 +37,73 @@ function App() {
   return (
     <div className='page'>
       <Header />
-      <Main onEditProfile={handleEditProfileClick}
-            onAddPlace={handleAddPlaceClick}
-            onEditAvatar={handleEditAvatarClick}
-            onCardClick={handleCardClick}
+      <Main
+        onEditProfile={handleEditProfileClick}
+        onAddPlace={handleAddPlaceClick}
+        onEditAvatar={handleEditAvatarClick}
+        onCardClick={handleCardClick}
       />
       <Footer />
 
-      <PopupWithForm title='Редактировать профиль' name='edit-profile' isOpen={isEditProfilePopupOpen}
-                     onClose={closeAllPopups}>
+      <PopupWithForm
+        title='Редактировать профиль'
+        name='edit-profile'
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
+      >
         <label className='form__field'>
-          <input type='text'
-                 name='name'
-                 id='name-input'
-                 className='form__input form__input_type_name'
-                 required
-                 minLength='2'
-                 maxLength='40'
+          <input
+            type='text'
+            name='name'
+            id='name-input'
+            className='form__input form__input_type_name'
+            required
+            minLength='2'
+            maxLength='40'
           />
           <span className='form__input-error name-input-error' />
         </label>
         <label className='form__field'>
-          <input type='text'
-                 name='about'
-                 id='about-input'
-                 className='form__input form__input_type_about'
-                 required
-                 minLength='2'
-                 maxLength='200'
+          <input
+            type='text'
+            name='about'
+            id='about-input'
+            className='form__input form__input_type_about'
+            required
+            minLength='2'
+            maxLength='200'
           />
           <span className='form__input-error about-input-error' />
         </label>
       </PopupWithForm>
 
-      <PopupWithForm title='Новое место' name='add-card' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
+      <PopupWithForm
+        title='Новое место'
+        name='add-card'
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
+      >
         <label className='form__field'>
-          <input type='text'
-                 name='name'
-                 id='place-input'
-                 placeholder='Название'
-                 className='form__input form__input_type_card-name'
-                 required
-                 minLength='2'
-                 maxLength='30'
+          <input
+            type='text'
+            name='name'
+            id='place-input'
+            placeholder='Название'
+            className='form__input form__input_type_card-name'
+            required
+            minLength='2'
+            maxLength='30'
           />
           <span className='form__input-error place-input-error' />
         </label>
         <label className='form__field'>
-          <input type='url'
-                 name='link'
-                 id='link-input'
-                 placeholder='Ссылка на картинку'
-                 className='form__input form__input_type_link'
-                 required
+          <input
+            type='url'
+            name='link'
+            id='link-input'
+            placeholder='Ссылка на картинку'
+            className='form__input form__input_type_link'
+            required
           />
           <span className='form__input-error link-input-error' />
         </label>
@@ -101,14 +115,19 @@ function App() {
         <input type='hidden' className='form__input form__input_type_id' name='id' />
       </PopupWithForm>
 
-      <PopupWithForm title='Обновить аватар' name='update-profile' isOpen={isEditAvatarPopupOpen}
-                     onClose={closeAllPopups}>
+      <PopupWithForm
+        title='Обновить аватар'
+        name='update-profile'
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
+      >
         <label className='form__field'>
-          <input type='url'
-                 name='avatar'
-                 id='avatar-input'
-                 className='form__input form__input_type_link'
-                 required
+          <input
+            type='url'
+            name='avatar'
+            id='avatar-input'
+            className='form__input form__input_type_link'
+            required
           />
           <span className='form__input-error avatar-input-error' />
         </label>
