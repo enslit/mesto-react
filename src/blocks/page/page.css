@@ -11,4 +11,11 @@
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     color: #fff;
+    display: grid;
+    grid-template-areas:
+        'header'
+        'content'
+        'footer'
+    ;
+    grid-template-rows: min-content 2fr min-content;
 }
