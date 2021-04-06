@@ -27,11 +27,11 @@ class Api {
       });
   }
 
-  getMe() {
+  getUserInfo() {
     return this._fetch('users/me');
   }
 
-  getInitialCards() {
+  getCardList() {
     return this._fetch('cards');
   }
 

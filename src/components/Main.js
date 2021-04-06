@@ -17,8 +17,8 @@ function Main({ onAddPlace, onEditAvatar, onEditProfile, onCardClick }) {
 
   useEffect(() => {
     Promise.all([
-      api.getMe(),
-      api.getInitialCards(),
+      api.getUserInfo(),
+      api.getCardList(),
     ])
       .then(([userData, initialCards]) => {
         setUserData(userData);
