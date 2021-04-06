@@ -20,9 +20,9 @@ function Main({ onAddPlace, onEditAvatar, onEditProfile, onCardClick }) {
       api.getUserInfo(),
       api.getCardList(),
     ])
-      .then(([userData, initialCards]) => {
+      .then(([userData, cardList]) => {
         setUserData(userData);
-        setCards(initialCards);
+        setCards(cardList);
       })
       .catch((err) => {
         console.error(err.message);
