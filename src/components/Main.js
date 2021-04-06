@@ -1,13 +1,23 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from './Card';
 import { api } from '../utils/Api';
 import spinner from '../images/spinner.svg';
+import Loader from './Loder';
 
 function Main({ onAddPlace, onEditAvatar, onEditProfile, onCardClick }) {
+  const [loading, setLoading] = useState(true);
   const [userName, setUserName] = useState('Загрузка...');
   const [userDescription, setUserDescription] = useState('');
   const [userAvatar, setUserAvatar] = useState(spinner);
   const [cards, setCards] = useState([]);
+
+  const buildCardList = (cardList) => {
+    return (
+      <ul className='cards__list'>
+        {cardList.map(card => <Card key={card._id} card={card} onCardClick={onCardClick} />)}
+      </ul>
+    )
+  }
 
   const setUserData = (userData) => {
     setUserName(userData.name);
@@ -16,16 +26,21 @@ function Main({ onAddPlace, onEditAvatar, onEditProfile, onCardClick }) {
   };
 
   useEffect(() => {
+    setLoading(true);
+
     Promise.all([
-      api.getMe(),
-      api.getInitialCards(),
+      api.getUserInfo(),
+      api.getCardList(),
     ])
-      .then(([userData, initialCards]) => {
+      .then(([userData, cardList]) => {
         setUserData(userData);
-        setCards(initialCards);
+        setCards(cardList);
       })
       .catch((err) => {
         console.error(err.message);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -54,9 +69,11 @@ function Main({ onAddPlace, onEditAvatar, onEditProfile, onCardClick }) {
       </section>
 
       <section className='cards'>
-        <ul className='cards__list'>
-          {cards.map(card => <Card key={card._id} card={card} onCardClick={onCardClick} />)}
-        </ul>
+        {
+          loading
+            ? <Loader />
+            : buildCardList(cards)
+        }
       </section>
     </main>
   );

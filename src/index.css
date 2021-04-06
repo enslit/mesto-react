@@ -4,11 +4,14 @@
 
 /* Blocks */
 @import "./blocks/page/page.css";
+@import "./blocks/content/content.css";
 @import "./blocks/container/container.css";
 
 @import "./blocks/header/header.css";
 @import "./blocks/logo/logo.css";
 @import "./blocks/logo/__img/logo__img.css";
+
+@import "./blocks/loader/loader.css";
 
 @import "./blocks/btn/btn.css";
 @import "./blocks/btn/_type/btn_type_add-card.css";

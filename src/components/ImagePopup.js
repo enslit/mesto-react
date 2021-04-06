@@ -1,3 +1,5 @@
+import React from 'react';
+
 function ImagePopup({ card, onClose }) {
   const popupClasses = `popup popup_type_image ${card ? 'popup_opened' : ''}`;
 

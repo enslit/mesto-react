@@ -1,3 +1,5 @@
+import React from 'react';
+
 function Card({ card, onCardClick }) {
   const handleCardClick = () => {
     onCardClick(card);
