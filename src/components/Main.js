@@ -1,34 +1,20 @@
-import React, { useState, useEffect, useContext } from 'react';
-import Card from './Card';
-import { api } from '../utils/Api';
-import Loader from './Loder';
+import React, { useContext } from 'react';
 import CurrentUserContext from '../contexts/user/CurrentUserContext';
+import Card from './Card';
+import Loader from './Loder';
 
-function logError(error) {
-  console.error(error.message);
-}
-
-function Main({ onAddPlace, onEditAvatar, onEditProfile, onCardClick }) {
-  const [loading, setLoading] = useState(true);
-  const [cards, setCards] = useState([]);
-  const {_id: currentUserId, name, about, avatar} = useContext(CurrentUserContext);
-
-  const handleCardLike = (card) => {
-    const isLiked = card.likes.some(user => user._id === currentUserId);
-
-    api.like(card._id, !isLiked)
-      .then((newCard) => {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-      });
-  }
-
-  const handleCardDelete = (id) => {
-    api.delete(id)
-      .then(() => {
-        setCards((state) => state.filter((c) => c._id !== id));
-      })
-      .catch(logError)
-  }
+function Main(props) {
+  const {name, about, avatar} = useContext(CurrentUserContext);
+  const {
+    cards,
+    onCardLike,
+    onCardDelete,
+    onAddPlace,
+    onEditAvatar,
+    onEditProfile,
+    onCardClick,
+    loading
+  } = props;
 
   const buildCardList = (cardList) => {
     return (
@@ -38,8 +24,8 @@ function Main({ onAddPlace, onEditAvatar, onEditProfile, onCardClick }) {
             return <Card
               key={card._id}
               card={card}
-              onCardLike={handleCardLike}
-              onCardDelete={handleCardDelete}
+              onCardLike={onCardLike}
+              onCardDelete={onCardDelete}
               onCardClick={onCardClick}
             />
           })
@@ -47,19 +33,6 @@ function Main({ onAddPlace, onEditAvatar, onEditProfile, onCardClick }) {
       </ul>
     )
   }
-
-  useEffect(() => {
-    setLoading(true);
-
-    api.getCardList()
-      .then((cardList) => {
-        setCards(cardList);
-      })
-      .catch(logError)
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
 
   return (
     <main className='content container'>
