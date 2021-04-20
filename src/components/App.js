@@ -8,6 +8,7 @@ import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 
 function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
@@ -37,6 +38,16 @@ function App() {
       .then(newUserData => {
         setCurrentUser(newUserData);
         setIsEditProfilePopupOpen(false);
+      })
+      .catch(logError)
+  }
+
+  const handleUpdateAvatar = (formData) => {
+    console.log(formData);
+    api.updateAvatar(formData)
+      .then(newUserData => {
+        setCurrentUser(newUserData);
+        setIsEditAvatarPopupOpen(false);
       })
       .catch(logError)
   }
@@ -113,23 +124,11 @@ function App() {
           <input type='hidden' className='form__input form__input_type_id' name='id' />
         </PopupWithForm>
 
-        <PopupWithForm
-          title='Обновить аватар'
-          name='update-profile'
-          isOpen={isEditAvatarPopupOpen}
+        <EditAvatarPopup
+          open={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
-        >
-          <label className='form__field'>
-            <input
-              type='url'
-              name='avatar'
-              id='avatar-input'
-              className='form__input form__input_type_link'
-              required
-            />
-            <span className='form__input-error avatar-input-error' />
-          </label>
-        </PopupWithForm>
+          onUpdateAvatar={handleUpdateAvatar}
+        />
       </div>
     </CurrentUserContext.Provider>
   );
