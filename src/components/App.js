@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import CurrentUserContext from '../contexts/user/CurrentUserContext';
+import { api } from '../utils/Api';
+import { logError } from '../utils/utils';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
-import { api } from '../utils/Api';
+import EditProfilePopup from './EditProfilePopup';
 
 function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
@@ -30,6 +32,15 @@ function App() {
     setSelectedCard(card);
   };
 
+  const handleUpdateUser = (userData) => {
+    api.updateProfile(userData)
+      .then(newUserData => {
+        setCurrentUser(newUserData);
+        setIsEditProfilePopupOpen(false);
+      })
+      .catch(logError)
+  }
+
   const closeAllPopups = () => {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
@@ -42,9 +53,7 @@ function App() {
       .then((userData) => {
         setCurrentUser(userData);
       })
-      .catch((err) => {
-        console.error(err.message);
-      })
+      .catch(logError)
   }, []);
 
 
@@ -60,37 +69,11 @@ function App() {
         />
         <Footer />
 
-        <PopupWithForm
-          title='Редактировать профиль'
-          name='edit-profile'
-          isOpen={isEditProfilePopupOpen}
+        <EditProfilePopup
+          open={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-        >
-          <label className='form__field'>
-            <input
-              type='text'
-              name='name'
-              id='name-input'
-              className='form__input form__input_type_name'
-              required
-              minLength='2'
-              maxLength='40'
-            />
-            <span className='form__input-error name-input-error' />
-          </label>
-          <label className='form__field'>
-            <input
-              type='text'
-              name='about'
-              id='about-input'
-              className='form__input form__input_type_about'
-              required
-              minLength='2'
-              maxLength='200'
-            />
-            <span className='form__input-error about-input-error' />
-          </label>
-        </PopupWithForm>
+          onUpdateUser={handleUpdateUser}
+        />
 
         <PopupWithForm
           title='Новое место'
