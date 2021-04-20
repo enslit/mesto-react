@@ -4,6 +4,10 @@ import { api } from '../utils/Api';
 import Loader from './Loder';
 import CurrentUserContext from '../contexts/user/CurrentUserContext';
 
+function logError(error) {
+  console.error(error.message);
+}
+
 function Main({ onAddPlace, onEditAvatar, onEditProfile, onCardClick }) {
   const [loading, setLoading] = useState(true);
   const [cards, setCards] = useState([]);
@@ -18,10 +22,28 @@ function Main({ onAddPlace, onEditAvatar, onEditProfile, onCardClick }) {
       });
   }
 
+  const handleCardDelete = (id) => {
+    api.delete(id)
+      .then(() => {
+        setCards((state) => state.filter((c) => c._id !== id));
+      })
+      .catch(logError)
+  }
+
   const buildCardList = (cardList) => {
     return (
       <ul className='cards__list'>
-        {cardList.map(card => <Card key={card._id} card={card} onCardLike={handleCardLike} onCardClick={onCardClick} />)}
+        {
+          cardList.map(card => {
+            return <Card
+              key={card._id}
+              card={card}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
+              onCardClick={onCardClick}
+            />
+          })
+        }
       </ul>
     )
   }
@@ -33,9 +55,7 @@ function Main({ onAddPlace, onEditAvatar, onEditProfile, onCardClick }) {
       .then((cardList) => {
         setCards(cardList);
       })
-      .catch((err) => {
-        console.error(err.message);
-      })
+      .catch(logError)
       .finally(() => {
         setLoading(false);
       });
