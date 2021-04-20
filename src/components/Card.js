@@ -5,15 +5,15 @@ function DeleteButton() {
   return <button type='button' aria-label='Удалить' className='card__delete btn btn_type_delete' />
 }
 
-function LikeButton({isLiked}) {
+function LikeButton({isLiked, onClickLike}) {
   const classes = `btn btn_type_like ${isLiked && 'btn_type_like-active'}`;
 
   return (
-    <button type='button' aria-label='Нравится' className={classes} />
+    <button type='button' aria-label='Нравится' className={classes} onClick={onClickLike} />
   )
 }
 
-function Card({ card, onCardClick }) {
+function Card({ card, onCardClick, onCardLike }) {
   const {_id: currentUserId} = useContext(CurrentUserContext);
 
   const isOwner = card.owner._id === currentUserId;
@@ -23,6 +23,10 @@ function Card({ card, onCardClick }) {
     onCardClick(card);
   };
 
+  const handleLikeClick = () => {
+    onCardLike(card);
+  }
+
   return (
     <li className='cards__list-item'>
       <article className='card'>
@@ -31,7 +35,7 @@ function Card({ card, onCardClick }) {
         <div className='card__description'>
           <h2 className='card__title'>{card.name}</h2>
           <div className='card__like'>
-            <LikeButton isLiked={isLiked} />
+            <LikeButton onClickLike={handleLikeClick} isLiked={isLiked} />
             <span className='card__like-cnt'>{card.likes.length || ''}</span>
           </div>
         </div>

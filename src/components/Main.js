@@ -7,12 +7,21 @@ import CurrentUserContext from '../contexts/user/CurrentUserContext';
 function Main({ onAddPlace, onEditAvatar, onEditProfile, onCardClick }) {
   const [loading, setLoading] = useState(true);
   const [cards, setCards] = useState([]);
-  const {name, about, avatar} = useContext(CurrentUserContext);
+  const {_id: currentUserId, name, about, avatar} = useContext(CurrentUserContext);
+
+  const handleCardLike = (card) => {
+    const isLiked = card.likes.some(user => user._id === currentUserId);
+
+    api.like(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      });
+  }
 
   const buildCardList = (cardList) => {
     return (
       <ul className='cards__list'>
-        {cardList.map(card => <Card key={card._id} card={card} onCardClick={onCardClick} />)}
+        {cardList.map(card => <Card key={card._id} card={card} onCardLike={handleCardLike} onCardClick={onCardClick} />)}
       </ul>
     )
   }
@@ -41,18 +50,20 @@ function Main({ onAddPlace, onEditAvatar, onEditProfile, onCardClick }) {
         <div className='profile__details'>
           <div className='profile__text'>
             <h1 className='profile__name'>{name}</h1>
-            <button type='button'
-                    aria-label='Редактировать профиль'
-                    className='btn btn_type_edit-profile'
-                    onClick={onEditProfile}
+            <button
+              type='button'
+              aria-label='Редактировать профиль'
+              className='btn btn_type_edit-profile'
+              onClick={onEditProfile}
             />
           </div>
           <p className='profile__about'>{about}</p>
         </div>
-        <button type='button'
-                aria-label='Добавить новую карточку'
-                className='btn btn_type_add-card'
-                onClick={onAddPlace}
+        <button
+          type='button'
+          aria-label='Добавить новую карточку'
+          className='btn btn_type_add-card'
+          onClick={onAddPlace}
         />
       </section>
 
