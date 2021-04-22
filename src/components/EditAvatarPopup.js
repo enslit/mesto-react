@@ -1,7 +1,7 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
 
-function EditAvatarPopup({ open, onClose, onUpdateAvatar }) {
+function EditAvatarPopup({ open, onClose, onUpdateAvatar, submitting }) {
   const ref = React.useRef();
 
   const handleSubmit = (evt) => {
@@ -19,6 +19,7 @@ function EditAvatarPopup({ open, onClose, onUpdateAvatar }) {
       isOpen={open}
       onClose={onClose}
       onSubmit={handleSubmit}
+      submitting={submitting}
     >
       <label className='form__field'>
         <input

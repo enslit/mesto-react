@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PopupWithForm from './PopupWithForm';
 
-function AddPlacePopup({ open, onClose, onAddPlace }) {
+function AddPlacePopup({ open, onClose, onAddPlace, submitting }) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
 
@@ -26,6 +26,7 @@ function AddPlacePopup({ open, onClose, onAddPlace }) {
       isOpen={open}
       onClose={onClose}
       onSubmit={handleSubmit}
+      submitting={submitting}
     >
       <label className='form__field'>
         <input

@@ -13,6 +13,7 @@ import AddPlacePopup from './AddPlacePopup';
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const [formSubmitting, setFormSubmitting] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
@@ -37,25 +38,29 @@ function App() {
   };
 
   const handleUpdateUser = (userData) => {
+    setFormSubmitting(true);
     api.updateProfile(userData)
       .then(newUserData => {
         setCurrentUser(newUserData);
         setIsEditProfilePopupOpen(false);
       })
       .catch(logError)
+      .finally(() => setFormSubmitting(false));
   }
 
   const handleUpdateAvatar = (formData) => {
-    console.log(formData);
+    setFormSubmitting(true);
     api.updateAvatar(formData)
       .then(newUserData => {
         setCurrentUser(newUserData);
         setIsEditAvatarPopupOpen(false);
       })
       .catch(logError)
+      .finally(() => setFormSubmitting(false));
   }
 
   const handleAddPlaceSubmit = (cardData) => {
+    setFormSubmitting(true);
     api.postCard(cardData)
       .then((newCard) => {
         setCards([
@@ -65,6 +70,7 @@ function App() {
         setIsAddPlacePopupOpen(false);
       })
       .catch(logError)
+      .finally(() => setFormSubmitting(false));
   }
 
   const handleCardLike = (card) => {
@@ -128,12 +134,14 @@ function App() {
           open={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
+          submitting={formSubmitting}
         />
 
         <AddPlacePopup
           open={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
+          submitting={formSubmitting}
         />
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
@@ -146,6 +154,7 @@ function App() {
           open={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
+          submitting={formSubmitting}
         />
       </div>
     </CurrentUserContext.Provider>
