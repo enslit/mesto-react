@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
-import CurrentUserContext from '../contexts/user/CurrentUserContext';
-import { api } from '../utils/Api';
+import CurrentUserContext from '../contexts/CurrentUserContext';
+import { api } from '../utils/api';
 import { logError } from '../utils/utils';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import ImagePopup from './Popups/ImagePopup';
-import EditProfilePopup from './Popups/EditProfilePopup';
-import EditAvatarPopup from './Popups/EditAvatarPopup';
-import AddPlacePopup from './Popups/AddPlacePopup';
-import ConfirmDeleteCardPopup from './Popups/ConfirmDeleteCardPopup';
+import ImagePopup from './ImagePopup';
+import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
+import ConfirmDeleteCardPopup from './ConfirmDeleteCardPopup';
 
 function App() {
   const [loading, setLoading] = useState(true);

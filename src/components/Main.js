@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import CurrentUserContext from '../contexts/user/CurrentUserContext';
+import CurrentUserContext from '../contexts/CurrentUserContext';
 import Card from './Card';
 import Loader from './Loder';
 
