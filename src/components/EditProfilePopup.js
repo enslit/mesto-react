@@ -1,18 +1,24 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PopupWithForm from './PopupWithForm';
 import CurrentUserContext from '../contexts/user/CurrentUserContext';
+import FormInput from './FormInput';
 
 function EditProfilePopup({ onClose, onUpdateUser, open, submitting }) {
   const currentUser = useContext(CurrentUserContext);
   const [userName, setUserName] = useState(currentUser.name);
   const [userAbout, setUserAbout] = useState(currentUser.about);
+  const [nameValid, setNameValid] = useState(true);
+  const [aboutValid, setAboutValid] = useState(true);
+  const [formValid, setFormValid] = useState(true);
 
-  const onChangeUserNameInput = (evt) => {
-    setUserName(evt.target.value);
+  const onChangeUserNameInput = (value, valid) => {
+    setNameValid(valid);
+    setUserName(value);
   }
 
-  const onChangeUserAboutInput = (evt) => {
-    setUserAbout(evt.target.value);
+  const onChangeUserAboutInput = (value, valid) => {
+    setAboutValid(valid);
+    setUserAbout(value);
   }
 
   const handleSubmit = (evt) => {
@@ -25,6 +31,14 @@ function EditProfilePopup({ onClose, onUpdateUser, open, submitting }) {
   }
 
   useEffect(() => {
+    if (nameValid && aboutValid) {
+      setFormValid(true);
+    } else {
+      setFormValid(false);
+    }
+  }, [nameValid, aboutValid]);
+
+  useEffect(() => {
     setUserName(currentUser.name);
     setUserAbout(currentUser.about);
   }, [currentUser]);
@@ -34,38 +48,33 @@ function EditProfilePopup({ onClose, onUpdateUser, open, submitting }) {
       title='Редактировать профиль'
       name='edit-profile'
       isOpen={open}
+      disabled={!formValid}
       onClose={onClose}
       onSubmit={handleSubmit}
       submitting={submitting}
     >
-      <label className='form__field'>
-        <input
-          type='text'
-          name='name'
-          id='name-input'
-          className='form__input form__input_type_name'
-          required
-          minLength='2'
-          maxLength='40'
-          value={userName}
-          onChange={onChangeUserNameInput}
-        />
-        <span className='form__input-error name-input-error' />
-      </label>
-      <label className='form__field'>
-        <input
-          type='text'
-          name='about'
-          id='about-input'
-          className='form__input form__input_type_about'
-          required
-          minLength='2'
-          maxLength='200'
-          value={userAbout}
-          onChange={onChangeUserAboutInput}
-        />
-        <span className='form__input-error about-input-error' />
-      </label>
+      <FormInput
+        type='text'
+        name='name'
+        id='name-input'
+        className='form__input form__input_type_name'
+        required
+        minLength='2'
+        maxLength='40'
+        value={userName}
+        onChange={onChangeUserNameInput}
+      />
+      <FormInput
+        type='text'
+        name='about'
+        id='about-input'
+        className='form__input form__input_type_about'
+        required
+        minLength='2'
+        maxLength='200'
+        value={userAbout}
+        onChange={onChangeUserAboutInput}
+      />
     </PopupWithForm>
   );
 }

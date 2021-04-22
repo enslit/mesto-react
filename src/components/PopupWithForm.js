@@ -10,9 +10,11 @@ function PopupWithForm(props) {
     onSubmit,
     children,
     submitting,
+    disabled,
     buttonText = 'Сохранить'
   } = props;
   const popupClasses = `popup popup_type_${name} ${isOpen && 'popup_opened'}`;
+  const buttonClasses = `form__save ${disabled && 'form__save_disabled'}`;
 
   return (
     <div className={popupClasses}>
@@ -34,7 +36,8 @@ function PopupWithForm(props) {
           <button
             type='submit'
             name='save'
-            className='form__save'
+            className={buttonClasses}
+            disabled={disabled}
           >
             {submitting ? <Loader size={30} count={15} speed={700} /> : buttonText}
           </button>

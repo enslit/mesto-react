@@ -45,6 +45,7 @@ function Loader(props) {
     for (let i = 0, j = speed; i < 360; i += rotateStep, j -= delayStep) {
       parts.push(
         <Part
+          key={i}
           step={i}
           delay={j}
           speed={speed}
