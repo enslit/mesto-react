@@ -5,11 +5,11 @@ import { logError } from '../utils/utils';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import ImagePopup from './ImagePopup';
-import EditProfilePopup from './EditProfilePopup';
-import EditAvatarPopup from './EditAvatarPopup';
-import AddPlacePopup from './AddPlacePopup';
-import ConfirmDeleteCardPopup from './ConfirmDeleteCardPopup';
+import ImagePopup from './Popups/ImagePopup';
+import EditProfilePopup from './Popups/EditProfilePopup';
+import EditAvatarPopup from './Popups/EditAvatarPopup';
+import AddPlacePopup from './Popups/AddPlacePopup';
+import ConfirmDeleteCardPopup from './Popups/ConfirmDeleteCardPopup';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -138,30 +138,25 @@ function App() {
           loading={loading}
         />
         <Footer />
-
+        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         <EditProfilePopup
           open={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
           submitting={formSubmitting}
         />
-
         <AddPlacePopup
           open={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
           submitting={formSubmitting}
         />
-
-        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-
         <ConfirmDeleteCardPopup
           cardId={deletingCardId}
           onClose={closeAllPopups}
           onDeleteCard={handleDeleteCardSubmit}
           submitting={formSubmitting}
         />
-
         <EditAvatarPopup
           open={isEditAvatarPopupOpen}
           onClose={closeAllPopups}

@@ -20,15 +20,15 @@ function Main(props) {
     return (
       <ul className='cards__list'>
         {
-          cardList.map(card => {
-            return <Card
+          cardList.map(card => (
+            <Card
               key={card._id}
               card={card}
               onCardLike={onCardLike}
               onCardDelete={onCardDelete}
               onCardClick={onCardClick}
             />
-          })
+          ))
         }
       </ul>
     )
