@@ -12,6 +12,7 @@
 @import "./blocks/logo/__img/logo__img.css";
 
 @import "./blocks/loader/loader.css";
+@import "./blocks/loader/__svg/loader__svg.css";
 
 @import "./blocks/btn/btn.css";
 @import "./blocks/btn/_type/btn_type_add-card.css";

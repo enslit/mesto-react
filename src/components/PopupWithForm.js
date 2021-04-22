@@ -1,4 +1,5 @@
 import React from 'react';
+import Loader from './Loder';
 
 function PopupWithForm({ title, name, isOpen, onClose, onSubmit, children, submitting }) {
   const popupClasses = `popup popup_type_${name} ${isOpen && 'popup_opened'}`;
@@ -25,7 +26,7 @@ function PopupWithForm({ title, name, isOpen, onClose, onSubmit, children, submi
             name='save'
             className='form__save'
           >
-            {submitting ? "Загрузка..." : "Сохранить"}
+            {submitting ? <Loader size={30} count={15} speed={700} /> : "Сохранить"}
           </button>
         </form>
       </div>
