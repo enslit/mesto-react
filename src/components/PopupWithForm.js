@@ -1,7 +1,17 @@
 import React from 'react';
 import Loader from './Loder';
 
-function PopupWithForm({ title, name, isOpen, onClose, onSubmit, children, submitting }) {
+function PopupWithForm(props) {
+  const {
+    title,
+    name,
+    isOpen,
+    onClose,
+    onSubmit,
+    children,
+    submitting,
+    buttonText = 'Сохранить'
+  } = props;
   const popupClasses = `popup popup_type_${name} ${isOpen && 'popup_opened'}`;
 
   return (
@@ -26,7 +36,7 @@ function PopupWithForm({ title, name, isOpen, onClose, onSubmit, children, submi
             name='save'
             className='form__save'
           >
-            {submitting ? <Loader size={30} count={15} speed={700} /> : "Сохранить"}
+            {submitting ? <Loader size={30} count={15} speed={700} /> : buttonText}
           </button>
         </form>
       </div>
