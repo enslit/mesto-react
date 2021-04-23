@@ -27,10 +27,15 @@ function AddPlacePopup({ open, onClose, onAddPlace, submitting }) {
     setLink(value);
   }
 
+  const clearForm = () => {
+    setName('');
+    setLink('');
+  }
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    onAddPlace({name, link})
+    onAddPlace({name, link}, clearForm)
   }
 
   useEffect(() => {

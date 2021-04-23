@@ -64,7 +64,7 @@ function App() {
       .finally(() => setFormSubmitting(false));
   }
 
-  const handleAddPlaceSubmit = (cardData) => {
+  const handleAddPlaceSubmit = (cardData, clearCallback) => {
     setFormSubmitting(true);
     api.postCard(cardData)
       .then((newCard) => {
@@ -73,6 +73,7 @@ function App() {
           ...cards
         ])
         setIsAddPlacePopupOpen(false);
+        clearCallback();
       })
       .catch(logError)
       .finally(() => setFormSubmitting(false));
