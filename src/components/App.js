@@ -90,14 +90,16 @@ function App() {
       .finally(() => setFormSubmitting(false))
   }
 
-  const handleCardLike = (card) => {
+  const handleCardLike = (card, setLikeFetching) => {
     const isLiked = card.likes.some(user => user._id === currentUser._id);
 
+    setLikeFetching(true);
     api.like(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
       })
-      .catch(logError);
+      .catch(logError)
+      .finally(() => setLikeFetching(false));
   }
 
   const closeAllPopups = () => {

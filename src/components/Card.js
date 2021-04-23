@@ -1,5 +1,6 @@
-import React, {useContext} from 'react';
+import React, { useContext, useState } from 'react';
 import CurrentUserContext from '../contexts/CurrentUserContext';
+import Loader from './Loder';
 
 function DeleteButton({onClickDelete}) {
   return <button
@@ -10,20 +11,24 @@ function DeleteButton({onClickDelete}) {
   />
 }
 
-function LikeButton({isLiked, onClickLike}) {
+function LikeButton({isLiked, onClickLike, count}) {
   const classes = `btn btn_type_like ${isLiked && 'btn_type_like-active'}`;
 
   return (
-    <button
-      type='button'
-      aria-label='Нравится'
-      className={classes}
-      onClick={onClickLike}
-    />
+    <>
+      <button
+        type='button'
+        aria-label='Нравится'
+        className={classes}
+        onClick={onClickLike}
+      />
+      <span className='card__like-cnt'>{count}</span>
+    </>
   )
 }
 
 function Card({ card, onCardClick, onCardLike, onCardDelete }) {
+  const [isLikeFetching, setIsLikeFetching] = useState(false);
   const {_id: currentUserId} = useContext(CurrentUserContext);
 
   const isOwner = card.owner._id === currentUserId;
@@ -34,7 +39,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   };
 
   const handleLikeClick = () => {
-    onCardLike(card);
+    onCardLike(card, setIsLikeFetching);
   }
 
   const handleDeleteClick = () => {
@@ -54,8 +59,11 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
         <div className='card__description'>
           <h2 className='card__title'>{card.name}</h2>
           <div className='card__like'>
-            <LikeButton onClickLike={handleLikeClick} isLiked={isLiked} />
-            <span className='card__like-cnt'>{card.likes.length || ''}</span>
+            {
+              isLikeFetching
+                ? <Loader size={30} color="black" />
+                : <LikeButton onClickLike={handleLikeClick} isLiked={isLiked} count={card.likes.length} />
+            }
           </div>
         </div>
       </article>
