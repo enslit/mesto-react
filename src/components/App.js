@@ -96,7 +96,8 @@ function App() {
     api.like(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-      });
+      })
+      .catch(logError);
   }
 
   const closeAllPopups = () => {
