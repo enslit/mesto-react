@@ -1,5 +1,5 @@
 import React from 'react';
-import Loader from './Loder';
+import Loader from './Loader';
 
 function PopupWithForm(props) {
   const {

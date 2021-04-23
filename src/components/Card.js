@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import CurrentUserContext from '../contexts/CurrentUserContext';
-import Loader from './Loder';
+import Loader from './Loader';
 
 function DeleteButton({onClickDelete}) {
   return <button

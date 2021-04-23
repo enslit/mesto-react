@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import Card from './Card';
-import Loader from './Loder';
+import Loader from './Loader';
 
 function Main(props) {
   const {name, about, avatar} = useContext(CurrentUserContext);
