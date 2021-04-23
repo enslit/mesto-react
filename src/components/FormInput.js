@@ -1,9 +1,14 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 function FormInput(props) {
+  const [leave, setLeave] = useState(false);
   const {onChange} = props;
   const errorRef = useRef();
   const inputRef = useRef();
+
+  const handleBlur = () => {
+    setLeave(true);
+  }
 
   const handleChange = (evt) => {
     const { value, validity } = evt.target;
@@ -11,14 +16,16 @@ function FormInput(props) {
   }
 
   useEffect(() => {
-    const { validity, validationMessage } = inputRef.current;
+    if (leave) {
+      const { validity, validationMessage } = inputRef.current;
 
-    if (validity.valid) {
-      errorRef.current.textContent = '';
-    } else {
-      errorRef.current.textContent = validationMessage;
+      if (validity.valid) {
+        errorRef.current.textContent = '';
+      } else {
+        errorRef.current.textContent = validationMessage;
+      }
     }
-  }, [props.value])
+  }, [props.value, leave])
 
   return (
     <label className='form__field'>
@@ -26,6 +33,7 @@ function FormInput(props) {
         {...props}
         ref={inputRef}
         onChange={handleChange}
+        onBlur={handleBlur}
       />
       <span ref={errorRef} className='form__input-error name-input-error' />
     </label>
